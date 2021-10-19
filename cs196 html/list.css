@@ -1,0 +1,11 @@
+body {
+    background-color: slategray;
+    color: snow;
+}
+ul {
+    margin-left: 45%;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 75px;
+    font-style: italic;
+    font-weight: bold;
+}
