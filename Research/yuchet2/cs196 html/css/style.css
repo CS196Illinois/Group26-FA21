@@ -1,0 +1,16 @@
+p.paragraph#p1 {
+    background-color: bisque;
+    color: royalblue;
+    word-spacing: 1em;
+}
+.container {
+    width: 80%;
+    margin:auto;
+}
+body {
+    background-color: chartreuse;
+    color: #555555;
+}
+h1 {
+    text-align: center;
+}

@@ -1,0 +1,18 @@
+p.paragragh {
+    text-align: center;
+    font-size: 25px;
+    margin-top: 20%;
+    color: royalblue;
+}
+button.button {
+margin-left: 40%;
+}
+#a {
+    margin-right: 10px;
+}
+#b {
+    margin-right: 10px;
+}
+#margin {
+    margin-right: 10px;
+}
