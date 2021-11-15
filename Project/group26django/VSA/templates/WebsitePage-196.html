@@ -106,33 +106,9 @@
                         if (null !== myRecorder.objects.recorder) {
                             myRecorder.objects.recorder.stop();
 
-                            // Validate object
-                            if (null !== listObject
-                                    && 'object' === typeof listObject
-                                    && listObject.length > 0) {
-                                // Export the WAV file
-                                myRecorder.objects.recorder.exportWAV(function (blob) {
-                                    var url = (window.URL || window.webkitURL)
-                                            .createObjectURL(blob);
+                            window.location.href = "Recommendations.html"
 
-                                    // Prepare the playback
-                                    var audioObject = $('<audio controls></audio>')
-                                            .attr('src', url);
-
-                                    // Prepare the download link
-                                    var downloadObject = $('<a>&#9660;</a>')
-                                            .attr('href', url)
-                                            .attr('download', new Date().toUTCString() + '.wav');
-
-                                    // Wrap everything in a row
-                                    var holderObject = $('<div class="row"></div>')
-                                            .append(audioObject)
-                                            .append(downloadObject);
-
-                                    // Append to the list
-                                    listObject.append(holderObject);
-                                });
-                            }
+                           
                         }
                     }
                 };
