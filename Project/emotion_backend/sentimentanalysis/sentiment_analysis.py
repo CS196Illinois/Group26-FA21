@@ -1,56 +1,41 @@
 import os
-from flask import Flask, request, json, jsonify
+from flask import Flask, request, json, jsonify, flash
 import random
 from sentiment_analysis_service import SentimentAnalysisService
+from flask_ngrok import run_with_ngrok
 
 app = Flask(__name__)
-
+#run_with_ngrok(app)
 
 @app.route('/sentiment/audio',methods = ['POST'])
 def audio_analysis():
-
-    request_data = json.loads(request.data)
-
-    print(request_data)
-
-    #base64_wavefile = request_data['audioString']
-
-    ## TODO
-    #Save wave file content to some file add add the file to the filelist below
-
-    emotion_index = random.randint(1, 8)
-
     fileList = []
+    if 'file' not in request.files:
+        print('No file part')
+        return str(-1)
+    file = request.files['file']
+    if file.filename != '':
+        file.save(file.filename)
+        print(file.filename)
+        fileName = '/Users/adityaasthana/cs196/sentimentanalysis/' + file.filename
+        print(fileName)
+        fileList.append(fileName)
+        
+        emotion_detection_service = SentimentAnalysisService()
 
-    # Path of wavefile to be tested , one example here
-    #fileName = '/Users/adityaasthana/cs196/test_data/03-01-05-01-01-01-03.wav'
-    fileName = '/Users/adityaasthana/cs196/Audio_Speech_Actors_01-24/Actor_01/03-01-08-02-02-01-01.wav'
-    for root, dirs, files in os.walk("/Users/adityaasthana/cs196/test_data"):
-        for file in files:
-            if file.endswith(".wav"):
-                fileList.append(os.path.join(root, file))
-                print(len(fileList))
-    print(fileList)
+        X = emotion_detection_service.predict_result(fileList)
 
+        emotion_index = X.astype(int)
 
+        print('emotion index: ' + str(emotion_index))
 
-    emotion_detection_service = SentimentAnalysisService()
+        del emotion_detection_service
 
+        # return jsonify(emotionIndex=emotion_index)
 
-    X = emotion_detection_service.predict_result(fileList)
-
-
-    emotion_index = X.astype(int)
-
-    print('emotion index: ' + str(emotion_index))
-
-    del emotion_detection_service
-
-    #return jsonify(emotionIndex=emotion_index)
-
-    return str(emotion_index)
+        return str(emotion_index)
 
 if __name__ == '__main__':
     print('Running in local environment')
     app.run(host="localhost", port=8000, debug=True)
-#    app.run(debug=True, host='ec2-184-72-140-87.compute-1.amazonaws.com')
+#    app.run(debug=True, host='http://909a-2601-243-197e-fa00-f855-46ea-5dfd-4b1b.ngrok.io')
