@@ -3,4 +3,4 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 
 def home(request):
-    return render(request, 'homepage1.html')
+    return render(request, 'WebsitePage-196.html')
